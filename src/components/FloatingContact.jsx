@@ -12,7 +12,7 @@ const FloatingContact = () => {
         title="Gọi điện ngay"
       >
         <div className="contact-tooltip">0868.651.224</div>
-        <i className="ph ph-phone-call"></i>
+        <i className="ph-fill ph-phone-call"></i>
       </a>
       
       <a 
@@ -23,8 +23,7 @@ const FloatingContact = () => {
         title="Chat qua Zalo"
       >
         <div className="contact-tooltip">Zalo: 0868.651.224</div>
-        {/* Zalo doesn't have a phosphor icon by default, we can use a custom SVG or just a chat icon. A custom text 'Z' or SVG is best */}
-        <span className="zalo-text">Zalo</span>
+        <span className="zalo-text-logo">Zalo</span>
       </a>
       
       <a 
@@ -35,7 +34,9 @@ const FloatingContact = () => {
         title="Chat qua Facebook"
       >
         <div className="contact-tooltip">Facebook Latio</div>
-        <i className="ph-fill ph-facebook-logo"></i>
+        <svg viewBox="0 0 320 512" width="28" height="28" fill="currentColor">
+          <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"/>
+        </svg>
       </a>
     </div>
   );

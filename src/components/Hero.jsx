@@ -27,9 +27,9 @@ const Hero = () => {
             </div>
           </Link>
 
-          <a href="#courses" className="btn-secondary">
+          {/* <a href="#courses" className="btn-secondary">
             Xem giáo trình <i className="ph ph-book-open"></i>
-          </a>
+          </a> */}
         </div>
       </div>
 

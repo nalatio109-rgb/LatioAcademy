@@ -1,95 +1,26 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const courses = [
-  {
-    id: 1,
-    title: "Edit Video CapCut Thực Chiến",
-    subtitle: "Tự dựng video ngắn triệu view và xây dựng kênh TikTok viral chỉ sau 8 buổi học.",
-    duration: "8 buổi × 90 phút",
-    format: "Học Online qua Zoom",
-    oldPrice: "3.500.000đ",
-    price: "2.500.000đ",
-    discount: "Đăng ký nhóm ≥ 3: 2.100.000đ",
-    icon: "ph-video-camera",
-    color: "orange"
-  },
-  {
-    id: 2,
-    title: "Photoshop & AI Creative",
-    subtitle: "Thành thạo Photoshop chuyên sâu & đón đầu kỷ nguyên AI để nâng tầm thu nhập.",
-    parentCourse: "NẬNG CAO SAU EDIT CAPCUT",
-    duration: "22 buổi × 90 phút (33 giờ thực chiến)",
-    format: "Zoom nhóm (Tối đa 12 học viên)",
-    oldPrice: "9.500.000đ",
-    price: "7.800.000đ",
-    discount: "Tặng kho tài nguyên độc quyền",
-    icon: "ph-magic-wand",
-    color: "blue"
-  },
-  {
-    id: 3,
-    title: "Designer 2D Chuyên Nghiệp",
-    subtitle: "Làm chủ Photoshop từ số 0 và tự thiết kế ấn phẩm truyền thông chuẩn Agency.",
-    duration: "8 buổi × 90 phút",
-    format: "Học Online qua Zoom",
-    oldPrice: "3.500.000đ",
-    price: "2.800.000đ",
-    discount: "Đăng ký nhóm ≥ 3: 2.400.000đ",
-    icon: "ph-bezier-curve",
-    color: "purple"
-  },
-  {
-    id: 5,
-    title: "Adobe Photoshop Nâng Cao + AI",
-    subtitle: "Làm chủ Photoshop nâng cao & tích hợp AI Tools để tối ưu 80% thời gian thiết kế.",
-    parentCourse: "NẬNG CAO SAU DESIGN 2D",
-    duration: "16 buổi × 90 phút (24 giờ thực hành)",
-    format: "Zoom nhóm (Tối đa 12 học viên)",
-    oldPrice: "8.500.000đ",
-    price: "6.500.000đ",
-    discount: "Tặng Asset Pack 500+ Mockup",
-    icon: "ph-paint-brush",
-    color: "rose"
-  },
-  {
-    id: 4,
-    title: "Facebook & TikTok Ads Chuyên Nghiệp",
-    subtitle: "Học chạy quảng cáo Facebook/TikTok từ đầu — Tự tin quản lý ngân sách & tối ưu ROAS trong 8 buổi.",
-    duration: "8 buổi × 90 phút",
-    format: "Học Online qua Zoom",
-    oldPrice: "4.000.000đ",
-    price: "3.200.000đ",
-    discount: "Đăng ký nhóm ≥ 3: 2.700.000đ",
-    icon: "ph-megaphone",
-    color: "green"
-  },
-  {
-    id: 6,
-    title: "Facebook Ads Nâng Cao",
-    subtitle: "Làm chủ việc phân tích chỉ số, chẩn đoán lỗi quảng cáo qua 5 tầng và xây dựng hệ thống SOP tối ưu chuyên sâu.",
-    parentCourse: "NÂNG CAO SAU ADS CƠ BẢN",
-    duration: "12 buổi × 90 phút (18 giờ thực hành)",
-    format: "Online 1-on-1 qua Zoom",
-    oldPrice: "12.000.000đ",
-    price: "9.500.000đ",
-    discount: "Lịch học linh hoạt 1-1",
-    icon: "ph-presentation-chart",
-    color: "teal"
-  }
-];
 
-const getCourseHash = (color) => {
-  if (color === 'orange') return 'edit';
-  if (color === 'blue') return 'edit-advanced';
-  if (color === 'purple') return 'design';
-  if (color === 'rose') return 'design-advanced';
-  if (color === 'green') return 'ads';
-  if (color === 'teal') return 'ads-advanced';
-  return '';
-};
 
 const CoursesSection = () => {
+  const [dbCourses, setDbCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [showAll, setShowAll] = useState(false);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/courses')
+      .then(res => res.json())
+      .then(data => {
+        setDbCourses(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Lỗi:", err);
+        setLoading(false);
+      });
+  }, []);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -108,7 +39,35 @@ const CoursesSection = () => {
     return () => {
       elements.forEach((el) => observer.unobserve(el));
     };
-  }, []);
+  }, [loading]); // Re-run observer when loading finishes
+
+  const formatCourseForGrid = (dbCourse, index) => {
+    const colors = ['orange', 'blue', 'purple', 'rose', 'green', 'teal'];
+    const icons = ['ph-video-camera', 'ph-monitor-play', 'ph-pen-nib', 'ph-paint-brush-broad', 'ph-megaphone', 'ph-chart-line-up'];
+    
+    const color = colors[index % colors.length];
+    const icon = icons[index % icons.length];
+    
+    const priceNum = Number(dbCourse.price) || 0;
+
+    return {
+      id: dbCourse._id,
+      title: dbCourse.title || "",
+      subtitle: dbCourse.description || "",
+      parentCourse: dbCourse.parentCourse || "",
+      duration: dbCourse.duration || "8 buổi × 90 phút",
+      format: dbCourse.format || "Online",
+      oldPrice: dbCourse.oldPrice || (priceNum > 0 ? (priceNum * 1.5).toLocaleString('vi-VN') + "đ" : "0đ"),
+      price: priceNum > 0 ? priceNum.toLocaleString('vi-VN') + "đ" : "0đ",
+      discount: "Tặng kèm tài liệu trọn đời",
+      icon: icon,
+      color: color
+    };
+  };
+
+  const displayCourses = dbCourses
+    .slice(0, showAll ? dbCourses.length : 6)
+    .map((c, i) => formatCourseForGrid(c, i));
 
   return (
     <section className="courses-section" id="courses">
@@ -121,7 +80,12 @@ const CoursesSection = () => {
       </div>
       
       <div className="courses-grid">
-        {courses.map(course => (
+        {loading ? (
+          <p style={{textAlign: 'center', width: '100%', color: '#64748b'}}>Đang tải dữ liệu từ máy chủ...</p>
+        ) : displayCourses.length === 0 ? (
+          <p style={{textAlign: 'center', width: '100%', color: '#64748b'}}>Chưa có khóa học nào. Hãy thêm trong Admin!</p>
+        ) : (
+          displayCourses.map(course => (
           <div key={course.id} className={`course-card card-${course.color} reveal-on-scroll`}>
             {/* Ambient card background glow */}
             <div className="card-ambient-glow"></div>
@@ -159,13 +123,43 @@ const CoursesSection = () => {
                   <span className="price-discount">{course.discount}</span>
                 </div>
               </div>
-              <Link to={`/courses#${getCourseHash(course.color)}`} className="btn-course">
+              <Link to={`/courses#course-${course.id}`} className="btn-course">
                 Xem chi tiết <i className="ph ph-arrow-right"></i>
               </Link>
             </div>
           </div>
-        ))}
+          ))
+        )}
       </div>
+
+      {!loading && dbCourses.length > 6 && !showAll && (
+        <div style={{ textAlign: 'center', marginTop: '40px' }} className="reveal-on-scroll">
+          <button 
+            onClick={() => setShowAll(true)}
+            style={{
+              padding: '12px 30px',
+              background: 'transparent',
+              border: '2px solid var(--color-primary-blue)',
+              color: 'var(--color-primary-blue)',
+              borderRadius: '30px',
+              fontWeight: 'bold',
+              cursor: 'pointer',
+              fontSize: '16px',
+              transition: 'all 0.3s'
+            }}
+            onMouseOver={(e) => {
+              e.target.style.background = 'var(--color-primary-blue)';
+              e.target.style.color = 'white';
+            }}
+            onMouseOut={(e) => {
+              e.target.style.background = 'transparent';
+              e.target.style.color = 'var(--color-primary-blue)';
+            }}
+          >
+            Xem tất cả {dbCourses.length} khóa học <i className="ph ph-caret-down" style={{marginLeft: '5px'}}></i>
+          </button>
+        </div>
+      )}
     </section>
   );
 };

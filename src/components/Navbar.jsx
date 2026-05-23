@@ -44,7 +44,7 @@ const Navbar = () => {
             Khóa học <i className={`ph ph-caret-down nav-caret ${isDropdownOpen ? 'rotated' : ''}`}></i>
           </Link>
           <div className={`dropdown-menu ${isDropdownOpen ? 'show' : ''}`}>
-            <Link to="/courses#edit" className="dropdown-item orange" onClick={closeMobileMenu}>
+            <Link to="/courses" className="dropdown-item orange" onClick={closeMobileMenu}>
               <div className="dropdown-icon-wrapper">
                 <i className="ph ph-video-camera"></i>
               </div>
@@ -54,7 +54,7 @@ const Navbar = () => {
               </div>
             </Link>
             
-            <Link to="/courses#design" className="dropdown-item purple" onClick={closeMobileMenu}>
+            <Link to="/courses" className="dropdown-item purple" onClick={closeMobileMenu}>
               <div className="dropdown-icon-wrapper">
                 <i className="ph ph-palette"></i>
               </div>
@@ -64,7 +64,7 @@ const Navbar = () => {
               </div>
             </Link>
             
-            <Link to="/courses#ads" className="dropdown-item green" onClick={closeMobileMenu}>
+            <Link to="/courses" className="dropdown-item green" onClick={closeMobileMenu}>
               <div className="dropdown-icon-wrapper">
                 <i className="ph ph-megaphone"></i>
               </div>

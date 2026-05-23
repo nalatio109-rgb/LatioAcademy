@@ -46,23 +46,41 @@ const ContactPage = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
 
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        course: '',
-        message: ''
+    try {
+      const res = await fetch('http://localhost:5000/api/contacts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
       });
-    }, 1200);
+
+      if (res.ok) {
+        setIsSubmitting(false);
+        setIsSuccess(true);
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          course: '',
+          message: ''
+        });
+      } else {
+        const errData = await res.json();
+        alert('Lỗi: ' + errData.message);
+        setIsSubmitting(false);
+      }
+    } catch (err) {
+      console.error('Lỗi khi gửi liên hệ:', err);
+      alert('Lỗi kết nối Server!');
+      setIsSubmitting(false);
+    }
   };
 
   return (
