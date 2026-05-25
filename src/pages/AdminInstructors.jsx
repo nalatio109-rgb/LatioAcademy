@@ -28,7 +28,7 @@ const AdminInstructors = () => {
 
   const fetchInstructors = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/instructors');
+      const response = await fetch('https://latioacademyserver-production.up.railway.app/api/instructors');
       const data = await response.json();
       setInstructors(data);
     } catch (error) {
@@ -85,13 +85,13 @@ const AdminInstructors = () => {
 
     try {
       if (editingId) {
-        await fetch(`http://localhost:5000/api/instructors/${editingId}`, {
+        await fetch(`https://latioacademyserver-production.up.railway.app/api/instructors/${editingId}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
       } else {
-        await fetch('http://localhost:5000/api/instructors', {
+        await fetch('https://latioacademyserver-production.up.railway.app/api/instructors', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
@@ -119,7 +119,7 @@ const AdminInstructors = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Bạn có chắc chắn muốn xóa giảng viên này?')) {
       try {
-        await fetch(`http://localhost:5000/api/instructors/${id}`, {
+        await fetch(`https://latioacademyserver-production.up.railway.app/api/instructors/${id}`, {
           method: 'DELETE'
         });
         fetchInstructors();

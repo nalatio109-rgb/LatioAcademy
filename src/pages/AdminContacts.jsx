@@ -10,7 +10,7 @@ const AdminContacts = () => {
 
   const fetchContacts = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/contacts');
+      const response = await fetch('https://latioacademyserver-production.up.railway.app/api/contacts');
       const data = await response.json();
       setContacts(data);
       setLoading(false);
@@ -22,7 +22,7 @@ const AdminContacts = () => {
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/contacts/${id}`, {
+      const response = await fetch(`https://latioacademyserver-production.up.railway.app/api/contacts/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -45,7 +45,7 @@ const AdminContacts = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Bạn có chắc chắn muốn xóa tin nhắn liên hệ này?')) {
       try {
-        const response = await fetch(`http://localhost:5000/api/contacts/${id}`, {
+        const response = await fetch(`https://latioacademyserver-production.up.railway.app/api/contacts/${id}`, {
           method: 'DELETE'
         });
         

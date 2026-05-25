@@ -21,7 +21,7 @@ const AdminPage = () => {
   // Lấy dữ liệu khi trang tải
   const fetchCourses = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/courses');
+      const res = await fetch('https://latioacademyserver-production.up.railway.app/api/courses');
       const data = await res.json();
       setCourses(data);
     } catch (err) {
@@ -86,8 +86,8 @@ const AdminPage = () => {
     e.preventDefault();
     try {
       const url = editingId 
-        ? `http://localhost:5000/api/courses/${editingId}` 
-        : 'http://localhost:5000/api/courses';
+        ? `https://latioacademyserver-production.up.railway.app/api/courses/${editingId}` 
+        : 'https://latioacademyserver-production.up.railway.app/api/courses';
       const method = editingId ? 'PUT' : 'POST';
 
       const payload = {
@@ -153,7 +153,7 @@ const AdminPage = () => {
     if (!window.confirm("Bạn có chắc chắn muốn xóa khóa học này không?")) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/courses/${id}`, {
+      const res = await fetch(`https://latioacademyserver-production.up.railway.app/api/courses/${id}`, {
         method: 'DELETE'
       });
 
@@ -190,7 +190,7 @@ const AdminPage = () => {
     // Gửi yêu cầu cập nhật lên server
     const updates = newCourses.map((c, i) => ({ id: c._id, order: i }));
     try {
-      const res = await fetch('http://localhost:5000/api/courses/reorder', {
+      const res = await fetch('https://latioacademyserver-production.up.railway.app/api/courses/reorder', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ updates })

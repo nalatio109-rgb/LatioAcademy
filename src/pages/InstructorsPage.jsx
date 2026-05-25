@@ -6,7 +6,7 @@ const InstructorsPage = () => {
   const [instructorsData, setInstructorsData] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/instructors')
+    fetch('https://latioacademyserver-production.up.railway.app/api/instructors')
       .then(res => res.json())
       .then(data => setInstructorsData(data))
       .catch(err => console.error("Error fetching instructors:", err));

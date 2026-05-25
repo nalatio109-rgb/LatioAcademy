@@ -9,7 +9,7 @@ const CoursesSection = () => {
   const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/courses')
+    fetch('https://latioacademyserver-production.up.railway.app/api/courses')
       .then(res => res.json())
       .then(data => {
         setDbCourses(data);

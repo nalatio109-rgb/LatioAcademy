@@ -9,7 +9,7 @@ const CoursesPage = () => {
 
   // Hàm này sẽ tự động chạy để lấy dữ liệu từ Backend khi trang tải
   useEffect(() => {
-    fetch('http://localhost:5000/api/courses')
+    fetch('https://latioacademyserver-production.up.railway.app/api/courses')
       .then(res => res.json())
       .then(data => {
         setDbCourses(data);
