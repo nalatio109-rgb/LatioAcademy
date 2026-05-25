@@ -9,33 +9,19 @@ const Footer = () => {
           <div className="footer-brand">
             <h2 className="footer-logo">LATIO <span className="logo-accent">ACADEMY</span></h2>
             <p className="footer-tagline">Nâng tầm kỹ năng, bứt phá sự nghiệp cùng LATIO Academy.</p>
-            <div className="social-links">
-              <a href="#"><i className="ph ph-facebook-logo"></i></a>
-              <a href="#"><i className="ph ph-instagram-logo"></i></a>
-              <a href="#"><i className="ph ph-youtube-logo"></i></a>
-              <a href="#"><i className="ph ph-tiktok-logo"></i></a>
-            </div>
+            {/* <div className="social-links">
+              <a href="https://www.facebook.com/Khoahocmarketing.43?locale=vi_VN" target="_blank" rel="noopener noreferrer"><i className="ph ph-facebook-logo"></i></a>
+            </div> */}
           </div>
           
           <div className="footer-links-group">
             <div className="footer-col">
-              <h3>Khóa học</h3>
+              <h3>Khóa học Nổi bật</h3>
               <ul>
-                <li><Link to="/courses#design-advanced">Photoshop Nâng Cao</Link></li>
-                <li><Link to="/courses#design">Designer 2D</Link></li>
-                <li><Link to="/courses#edit">Edit Video CapCut</Link></li>
-                <li><Link to="/courses">Lộ trình Agency</Link></li>
-              </ul>
-            </div>
-            
-            <div className="footer-col">
-              <h3>Hỗ trợ</h3>
-              <ul>
-                <li><Link to="/contact">Liên hệ</Link></li>
-                <li><Link to="/instructors">Đội ngũ giảng viên</Link></li>
-                <li><a href="#">Chính sách hoàn tiền</a></li>
-                <li><a href="#">Câu hỏi thường gặp</a></li>
-                <li><a href="#">Cộng đồng học viên</a></li>
+                <li><Link to="/courses">Lộ trình Agency Toàn Diện</Link></li>
+                <li><Link to="/courses">Edit Video CapCut Thực Chiến</Link></li>
+                <li><Link to="/courses">Designer 2D Chuyên Nghiệp</Link></li>
+                <li><Link to="/courses">Facebook & TikTok Ads</Link></li>
               </ul>
             </div>
             
@@ -47,11 +33,27 @@ const Footer = () => {
                 <li><i className="ph ph-map-pin"></i> 86 Đoàn Văn Cừ, Đà Nẵng</li>
               </ul>
             </div>
+            
+            <div className="footer-col">
+              <h3>Bản đồ</h3>
+              <div className="footer-map" style={{ marginTop: '10px' }}>
+                <iframe 
+                  src="https://maps.google.com/maps?q=86%20Đoàn%20Văn%20Cừ,%20Đà%20Nẵng&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                  width="100%" 
+                  height="150" 
+                  style={{ border: 0, borderRadius: '8px' }} 
+                  allowFullScreen="" 
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Latio Academy Map"
+                ></iframe>
+              </div>
+            </div>
           </div>
         </div>
         
         <div className="footer-bottom">
-          <p>&copy; 2026 LATIO Academy. All rights reserved.</p>
+          <p>&copy; LATIO Academy</p>
           <div className="footer-legal">
             <a href="#">Privacy Policy</a>
             <a href="#">Terms of Service</a>
