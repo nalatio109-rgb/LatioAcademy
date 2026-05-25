@@ -9,7 +9,8 @@ const defaultForm = {
   oldPrice: '', connectorLabel: '',
   overheadTag: 'SAU 8 BUỔI HỌC', contentTitlePrefix: 'Trở thành chuyên gia ', contentTitleHighlight: '',
   features: 'Kiến thức cốt lõi và bài bản từ số 0\nThực hành trực tiếp trên dự án thực tế\nHỗ trợ giải đáp thắc mắc 1-1\nTặng bộ tài liệu template độc quyền\nXây dựng Portfolio chất lượng cao',
-  spotsLeft: 5
+  spotsLeft: 5,
+  showInNavbar: false
 };
 
 const AdminPage = () => {
@@ -77,8 +78,8 @@ const AdminPage = () => {
 
   // Xử lý thay đổi form
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    const { name, value, type, checked } = e.target;
+    setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
   };
 
   // Xử lý gửi form (Thêm/Sửa khóa học)
@@ -98,7 +99,8 @@ const AdminPage = () => {
         parentCourse: "",
         spotsLeft: 5,
         price: Number(formData.price),
-        features: formData.features.split('\n').map(s => s.trim()).filter(Boolean)
+        features: formData.features.split('\n').map(s => s.trim()).filter(Boolean),
+        showInNavbar: formData.showInNavbar
       };
 
       const res = await fetch(url, {
@@ -139,6 +141,7 @@ const AdminPage = () => {
       contentTitlePrefix: course.contentTitlePrefix || '',
       contentTitleHighlight: course.contentTitleHighlight || '',
       features: (course.features || []).join('\n'),
+      showInNavbar: course.showInNavbar || false,
     });
   };
 
@@ -375,7 +378,13 @@ const AdminPage = () => {
                 <div className="form-group" style={{flex: 1}}><label>Thời lượng (VD: 8 buổi × 90 phút)</label><input type="text" name="duration" value={formData.duration} onChange={handleChange} /></div>
                 <div className="form-group" style={{flex: 1}}><label>Hình thức (VD: Online)</label><input type="text" name="format" value={formData.format} onChange={handleChange} /></div>
               </div>
-              <div className="form-group"><label>Nhãn mũi tên liên kết (Nếu có, sẽ vẽ mũi tên chỉ xuống khóa học tiếp theo)</label><input type="text" name="connectorLabel" value={formData.connectorLabel} onChange={handleChange} placeholder="VD: LỘ TRÌNH LÊN CẤP AI CREATIVE" /></div>
+              <div style={{display: 'flex', gap: '10px', alignItems: 'center'}}>
+                <div className="form-group" style={{flex: 1}}><label>Nhãn mũi tên liên kết (Nếu có)</label><input type="text" name="connectorLabel" value={formData.connectorLabel} onChange={handleChange} placeholder="VD: LỘ TRÌNH LÊN CẤP AI CREATIVE" /></div>
+                <div className="form-group" style={{flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                  <label style={{fontWeight: 'bold', color: '#16a34a'}}>Hiển thị trên Menu Web</label>
+                  <input type="checkbox" name="showInNavbar" checked={formData.showInNavbar} onChange={handleChange} style={{ width: '24px', height: '24px', marginTop: '10px', cursor: 'pointer' }} />
+                </div>
+              </div>
             </fieldset>
 
             <fieldset style={{border: '1px solid #e2e8f0', borderRadius: '8px', padding: '15px', marginBottom: '20px'}}>

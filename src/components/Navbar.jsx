@@ -16,6 +16,18 @@ const Navbar = () => {
     setIsDropdownOpen(false);
   };
 
+  const [navCourses, setNavCourses] = useState([]);
+
+  useEffect(() => {
+    fetch('https://latioacademyserver-production.up.railway.app/api/courses')
+      .then(res => res.json())
+      .then(data => {
+        const visibleCourses = data.filter(c => c.showInNavbar);
+        setNavCourses(visibleCourses);
+      })
+      .catch(err => console.error("Error fetching courses for navbar:", err));
+  }, []);
+
   const toggleDropdown = (e) => {
     // Only toggle dropdown behavior on mobile view (width <= 768px)
     if (window.innerWidth <= 768) {
@@ -44,35 +56,21 @@ const Navbar = () => {
             Khóa học <i className={`ph ph-caret-down nav-caret ${isDropdownOpen ? 'rotated' : ''}`}></i>
           </Link>
           <div className={`dropdown-menu ${isDropdownOpen ? 'show' : ''}`}>
-            <Link to="/courses" className="dropdown-item orange" onClick={closeMobileMenu}>
-              <div className="dropdown-icon-wrapper">
-                <i className="ph ph-video-camera"></i>
-              </div>
-              <div className="dropdown-info">
-                <span className="dropdown-title">Edit Video</span>
-                <span className="dropdown-desc">CapCut Thực Chiến & TikTok</span>
-              </div>
-            </Link>
-            
-            <Link to="/courses" className="dropdown-item purple" onClick={closeMobileMenu}>
-              <div className="dropdown-icon-wrapper">
-                <i className="ph ph-palette"></i>
-              </div>
-              <div className="dropdown-info">
-                <span className="dropdown-title">Thiết kế Design</span>
-                <span className="dropdown-desc">Designer 2D Chuyên Nghiệp</span>
-              </div>
-            </Link>
-            
-            <Link to="/courses" className="dropdown-item green" onClick={closeMobileMenu}>
-              <div className="dropdown-icon-wrapper">
-                <i className="ph ph-megaphone"></i>
-              </div>
-              <div className="dropdown-info">
-                <span className="dropdown-title">Ads Marketing</span>
-                <span className="dropdown-desc">Facebook & TikTok Ads</span>
-              </div>
-            </Link>
+            {navCourses.length > 0 ? (
+              navCourses.map(course => (
+                <Link key={course._id} to="/courses" className={`dropdown-item ${course.color || 'orange'}`} onClick={closeMobileMenu}>
+                  <div className="dropdown-icon-wrapper">
+                    <i className={`ph ${course.icon || 'ph-video-camera'}`}></i>
+                  </div>
+                  <div className="dropdown-info">
+                    <span className="dropdown-title">{course.titlePrefix || course.title}</span>
+                    <span className="dropdown-desc">{course.titleSuffix || ''}</span>
+                  </div>
+                </Link>
+              ))
+            ) : (
+              <div style={{padding: '10px 20px', color: '#64748b'}}>Đang cập nhật...</div>
+            )}
           </div>
         </div>
 
