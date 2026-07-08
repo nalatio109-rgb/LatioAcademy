@@ -43,26 +43,23 @@ const MainLayout = ({ children }) => {
 };
 
 const AppContent = () => {
-  const location = useLocation();
-  const isAdminRoute = location.pathname.startsWith('/admin');
-
-  if (isAdminRoute) {
-    return (
-      <Routes>
-        <Route path="/admin" element={<AdminPage />} />
-      </Routes>
-    );
-  }
-
   return (
-    <MainLayout>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/courses" element={<CoursesPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/instructors" element={<InstructorsPage />} />
-      </Routes>
-    </MainLayout>
+    <Routes>
+      <Route path="/admin/*" element={<AdminPage />} />
+      <Route
+        path="*"
+        element={
+          <MainLayout>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/courses" element={<CoursesPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/instructors" element={<InstructorsPage />} />
+            </Routes>
+          </MainLayout>
+        }
+      />
+    </Routes>
   );
 };
 
